@@ -6,8 +6,8 @@
     <title>experience rruii</title>
 </head>
 <body>
-    <script src= "/rruii/js/three.js"></script>
-    <script src= "/rruii/js/OrbitControls.js"></script>
+    <script src= "/js/three.min.js"></script>
+    <script src= "/js/OrbitControls.js"></script>
     <script>
         var scene = new THREE.Scene( );
         var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 ); 
@@ -41,7 +41,7 @@
 
 
         // MATERIALS
-        var cubeMaterial = new THREE.MeshPhongMaterial( { map: new THREE.TextureLoader().load("/rruii/images/1.png"), side: THREE.DoubleSide });
+        var cubeMaterial = new THREE.MeshPhongMaterial( { map: new THREE.TextureLoader().load("/images/1.png"), side: THREE.DoubleSide });
         var cube = new THREE.Mesh(geometry, cubeMaterial );
         
         scene.add( cube );
