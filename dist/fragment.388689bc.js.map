@@ -1,0 +1,1 @@
+{"version":3,"sources":["shaders/fragment.glsl"],"names":["module","exports"],"mappings":"AAAAA,MAAM,CAACC,OAAP,GAAe,6EAAf","file":"fragment.388689bc.js","sourceRoot":"..","sourcesContent":["module.exports=\"#define GLSLIFY 1\\nvoid main() \\n{\\n    gl_FragColor= vec4(1.,0.,0.,1.);\\n}\";"]}
