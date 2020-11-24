@@ -67,3 +67,13 @@ canvas{
   outline: none;
   text-decoration: none;
 }
+
+@media only screen and (max-width: 600px) {
+    h1{
+        font-size: 40px;
+    }
+
+    .logo {
+        width: 300px;
+    }
+}
