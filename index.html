@@ -4,13 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>explore rruii</title>
     <link rel="stylesheet" href="/main.css">
 </head>
 
 <body>
     <!--DECLARE HTML ELEMENTS-->
-    <div id="container"></div>
+    <section class="showcase">
+        <div id="container"></div>   
+        <div class="content">
+            <img src="images/logo.png" class="logo">
+            <h1>state of emergence</h1>
+            <a href="quiz.html" class="btn">explore rruii</a>
+        </div>
+    </section>
+
 
     <!--CALL THREE.JS MODULES-->
     <script src="/js/three.min.js"></script>
@@ -18,13 +26,16 @@
     <script src="/js/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
     <script type="text/javascript" src="js/dat.gui.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
 
     <!--SHADERS GLSL FORMAT-->
     <script id="fragment-shader" type="x-shader/x-vertex">
         varying vec2 vCoordinates;
         varying vec3 vPos;
-        uniform sampler2D flower;
-        uniform sampler2D particle;
+        uniform sampler2D f1;
+        uniform sampler2D f2;
+        uniform sampler2D f3;
+        uniform sampler2D f4;
         uniform sampler2D mask;
         uniform float move; 
         
@@ -33,8 +44,10 @@
         {
             vec4 maskTexture = texture2D(mask,gl_PointCoord);
             vec2 myUV = vec2(vCoordinates.x/512.,vCoordinates.y/512.);
-            vec4 t1 = texture2D(flower, myUV);
-            vec4 t2 = texture2D(particle, myUV);
+            vec4 t1 = texture2D(f1, myUV);
+            vec4 t2 = texture2D(f2, myUV);
+            vec4 t3 = texture2D(f2, myUV);
+            vec4 t4 = texture2D(f2, myUV);
 
             vec4 final = mix(t1, t2, smoothstep(0.,1.,fract(move)));
 
@@ -107,6 +120,7 @@
                 this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 5000);
                 this.camera.position.z = 1500;
 
+
                 // create new scene
                 this.scene = new THREE.Scene();
 
@@ -140,35 +154,35 @@
                 this.renderer.setSize(this.width, this.height);
                 this.camera.aspect = this.width / this.height;
 
-                this.imageAspect = 855/1280;
+                this.imageAspect = 855 / 1280;
                 let a1; let a2;
-                if(this.height/this.width>this.imageAspect) {
-                    a1=(this.width/this.height)*this.imageAspect;
-                    a2=1;
+                if (this.height / this.width > this.imageAspect) {
+                    a1 = (this.width / this.height) * this.imageAspect;
+                    a2 = 1;
                 } else {
                     a1 = 1;
-                    a2 = (this.height/ this.width) / this.imageAspect;
+                    a2 = (this.height / this.width) / this.imageAspect;
                 }
-            
-            this.material.uniforms.resolution.value.x = this.width;
-            this.material.uniforms.resolution.value.y = this.height;
-            this.material.uniforms.resolution.value.z = a1;
-            this.material.uniforms.resolution.value.w = a2;
+
+                this.material.uniforms.resolution.value.x = this.width;
+                this.material.uniforms.resolution.value.y = this.height;
+                this.material.uniforms.resolution.value.z = a1;
+                this.material.uniforms.resolution.value.w = a2;
 
             }
 
-           
-           
+
+
             // DAT.GUI SETTINGS
 
 
             settings() {
                 let that = this;
                 this.settings = {
-                    progress: 0,
+                    progress: 0.9,
                 };
-                this.gui = new dat.GUI();
-                this.gui.add(this.settings, "progress", 0.7, 0.9, 0.01);
+                //this.gui = new dat.GUI();
+                //this.gui.add(this.settings, "progress", 0.7, 0.9, 0.01);
             }
 
 
@@ -232,10 +246,12 @@
             addMesh() {
                 // textures
                 //var mask = this.mask;
-                var flower = new THREE.TextureLoader().load('/images/flower.png');
-                var particle = new THREE.TextureLoader().load('/images/particle.png');
+                var f1 = new THREE.TextureLoader().load('/images/0.png');
+                var f2 = new THREE.TextureLoader().load('/images/1.png');
+                var f3 = new THREE.TextureLoader().load('/images/2.png');
+                var f4 = new THREE.TextureLoader().load('/images/3.png');
                 this.textures = [
-                    flower, particle
+                    f1, f2, f3, f4
                 ]
 
                 // declare materials
@@ -246,8 +262,10 @@
 
                     uniforms: {
                         progress: { type: "f", value: 0 },
-                        particle: { type: "t", value: this.textures[0] },
-                        flower: { type: "t", value: this.textures[1] },
+                        f1: { type: "t", value: this.textures[1] },
+                        f2: { type: "t", value: this.textures[0] },
+                        f3: { type: "t", value: this.textures[0] },
+                        f4: { type: "t", value: this.textures[0] },
                         //mask: {type:"t", value: this.mask[1]},
                         mouse: { type: "v2", value: null },
                         mousePressed: { type: "f", value: 0 },
@@ -262,9 +280,9 @@
                     depthWrite: false,
                 })
 
-                // particles
+                // f2s
                 let number = 512 * 512;
-                this.geometry = new THREE.BufferGeometry();
+                this.geometry = new THREE.BufferGeometry(100,100);
                 this.positions = new THREE.BufferAttribute(new Float32Array(number * 3), 3);
                 this.coordinates = new THREE.BufferAttribute(new Float32Array(number * 3), 3);
                 this.speeds = new THREE.BufferAttribute(new Float32Array(number), 1);
@@ -272,7 +290,7 @@
                 this.direction = new THREE.BufferAttribute(new Float32Array(number), 1);
                 this.press = new THREE.BufferAttribute(new Float32Array(number), 1);
 
-                // set random speeds for particles
+                // set random speeds for f2s
                 function rand(a, b) {
                     return a + (b - a) * Math.random();
                 }
@@ -300,7 +318,7 @@
 
 
 
-                // create particles
+                // create f2s
                 this.mesh = new THREE.Points(this.geometry, this.material);
                 this.scene.add(this.mesh);
 
@@ -316,8 +334,10 @@
                 let next = Math.floor(this.move + 40) % 2;
                 let prev = (Math.floor(this.move) + 1 + 40) % 2;
 
-                this.material.uniforms.flower.value = this.textures[prev];
-                this.material.uniforms.particle.value = this.textures[next];
+                this.material.uniforms.f1.value = this.textures[prev];
+                this.material.uniforms.f2.value = this.textures[next];
+                this.material.uniforms.f3.value = this.textures[next];
+                this.material.uniforms.f4.value = this.textures[next];
 
 
                 this.material.uniforms.transition.value = this.settings.progress;
