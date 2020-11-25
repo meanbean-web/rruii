@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-xmlns:fb="http://ogp.me/ns/fb#" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#" lang="en">
 
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGG4DBEEEV"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-QGG4DBEEEV');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>explore rruii</title>
     <link rel="stylesheet" type="text/css" href="/main.css.map">
     <link rel="stylesheet" type="text/css" href="/main.css">
-    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
-    <meta property="og:image" content="/images/cover.png"/>
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+    <meta property="og:image" content="/images/cover.png" />
 </head>
 
 <body>
     <!--DECLARE HTML ELEMENTS-->
     <section class="showcase">
-        <div id="container"></div>   
+        <div id="container"></div>
         <div class="content">
             <img src="images/logo.png" class="logo">
             <h1>state of emergence</h1>
@@ -286,7 +294,7 @@ xmlns:fb="http://ogp.me/ns/fb#" lang="en">
 
                 // f2s
                 let number = 512 * 512;
-                this.geometry = new THREE.BufferGeometry(100,100);
+                this.geometry = new THREE.BufferGeometry(100, 100);
                 this.positions = new THREE.BufferAttribute(new Float32Array(number * 3), 3);
                 this.coordinates = new THREE.BufferAttribute(new Float32Array(number * 3), 3);
                 this.speeds = new THREE.BufferAttribute(new Float32Array(number), 1);
